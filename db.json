@@ -1,13 +1,5 @@
 {
     "posts": [
-      {
-        "id": 1,
-        "titulo": "PS1",
-        "cor": "#6BD1FF",
-        "link_extra": {
-          "text": "Jogos do Playstation 1",
-          "url": "https://pt.wikipedia.org/wiki/PlayStation_(console)"
-        }
-      }
+
     ]
 }
