@@ -1,6 +1,13 @@
 <?php
 
-$connect_db = new PDO("mysql:dbname=todolist_poo;host=localhost", "root", "");
+try {
+    $connect_db = new PDO("mysl:dbname=todolist_poo;host=localhost", "root", "");    //code...
+} catch(PDOException $error) {
+    echo 'Erro com banco de dados '.$error ->getMessage();
+} catch(Exception $error) {
+    echo 'Erro generico '.$error ->getMessage();
+}
+
 
 $stmt = $connect_db->prepare("INSERT INTO user(name, email, password)values(:NAME, :EMAIL, :PASSWORD)");
 
