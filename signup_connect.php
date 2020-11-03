@@ -8,6 +8,9 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $name = $firstName.' '.$lastName;
 
+$name = ucfirst($name);
+$email = strtolower($email);
+
 
 try {
     $stmt = $pdo->prepare("INSERT INTO user(name, email, password) VALUES(:name, :email, :password)");
@@ -15,7 +18,7 @@ try {
     $stmt->bindParam(":email", $email);
     $stmt->bindParam(":password", $password);
     $stmt->execute();
-
+    header('location:todolist.php');
 } catch (PDOException $error) {
     echo 'Erro com banco de dados '.$error ->getMessage();
 } catch(Exception $error) {

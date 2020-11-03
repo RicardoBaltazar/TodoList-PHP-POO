@@ -1,6 +1,17 @@
 <?php
 
 require_once 'Db_connect.php';
+session_start();
+
+
+if ((!isset($_SESSION['name']) == true) and (!isset($_SESSION['email']) == true) and (!isset($_SESSION['password']) == true)) {
+    unset($_SESSION['name']);
+    unset($_SESSION['email']);
+    unset($_SESSION['password']);
+    header('location:index.php');
+}
+
+$name = $_SESSION['name'];
 
 
 
@@ -37,7 +48,7 @@ require_once 'Db_connect.php';
 
         <main>
             <section>
-                <div class="row">
+                <div class="row col">
                     <h4>Lista</h4>
                     <table>
                             <tr>
@@ -49,12 +60,12 @@ require_once 'Db_connect.php';
                             <?php
                             //$item = mysqli_query($connect, "SELECT * FROM list");
                             $select = $pdo->query("SELECT * FROM user");
-                            while ($linha = $select->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<tr><td>" . $linha['id'] . "</td>
-                                <td style='margin-left:25px;'>" . $linha['name'] . "</td>
-                                <td>" . $linha['email'] . "</td>
+                            while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<tr><td>" . $row['id'] . "</td>
+                                <td style='margin-left:25px;'>" . $name . "</td>
+                                <td>" . $row['email'] . "</td>
                                 <td>
-                                    <a href='delete.php?id=" . $linha['id'] . "'' class='btn-floating red'>
+                                    <a href='delete.php?id=" . $row['id'] . "'' class='btn-floating red'>
                                         <i class='material-icons'>delete</i>
                                     </a>
                                 </td>

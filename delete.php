@@ -8,6 +8,7 @@ try{
     $stmt = $pdo->prepare('DELETE FROM user WHERE id = :id');
     $stmt->bindParam(":id", $id);
     $stmt->execute();
+    header('location:todolist.php');
 
 } catch (PDOException $error) {
     echo 'Erro com banco de dados '.$error ->getMessage();

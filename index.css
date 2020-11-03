@@ -13,7 +13,7 @@
 .home-page main section {
     display: flex;
     text-align: center;
-    margin-top: 25px;
+    margin-top: 64px;
 }
 
 .link-login{
@@ -23,10 +23,10 @@
 
 @media(max-width: 992px){
 
-    .home-page header nav{
-
+    .home-page main section {
+        width: 100%;
+        margin-top: 0px;
     }
-
     .home-page header nav .brand-logo {
         font-size: 14px;
         left: 31%;
