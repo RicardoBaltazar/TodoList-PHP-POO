@@ -17,9 +17,11 @@ if(isset($_POST['action'])){
     $email = strtolower($email);
 
 
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE name = :name");
+    $stmt = $pdo->prepare("SELECT * FROM user WHERE name = :name AND email = :email AND password = :password");
     //$stmt->bindParam(":name", $name);
     $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $password);
     $stmt->execute();
     //$stmt->execute(['password' => $password]);
     if($stmt->rowCount() == 1){
@@ -28,11 +30,13 @@ if(isset($_POST['action'])){
         echo $info['email']."<br>";
         echo $info['password'];
 
+        $_SESSION['name'] = $info['name'];
+        $_SESSION['email'] = $info['email'];
+        $_SESSION['password'] = $info['password'];
+        header('location:todolist.php');
         /*
-        $_SESSION['name'] = $name;
         $_SESSION['email'] = $email;
         $_SESSION['password'] = $password;
-        header('location:todolist.php');
         */
     }else{
         echo '<div class="box_erro_login"><p><i class="fas fa-exclamation-circle"></i> Usuário não encontrado.</p></div>';

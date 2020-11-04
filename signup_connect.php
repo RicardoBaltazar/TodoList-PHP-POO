@@ -18,7 +18,7 @@ try {
     $stmt->bindParam(":email", $email);
     $stmt->bindParam(":password", $password);
     $stmt->execute();
-    header('location:todolist.php');
+    header('location:login.php');
 } catch (PDOException $error) {
     echo 'Erro com banco de dados '.$error ->getMessage();
 } catch(Exception $error) {
