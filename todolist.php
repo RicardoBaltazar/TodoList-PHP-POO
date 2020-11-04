@@ -59,12 +59,15 @@ $name = $_SESSION['name'];
                             </tr>
 
                             <?php
-                            //$item = mysqli_query($connect, "SELECT * FROM list");
-                            $select = $pdo->query("SELECT * FROM user");
+                            //$select = $pdo->query("SELECT * FROM list");
+                            $select = $pdo->prepare("SELECT * FROM list WHERE list.user = :user");
+                            //$stmt->bindParam(":name", $name);
+                            $select->bindParam(':user', $name);
+                            $select->execute();
                             while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr><td>" . $row['id'] . "</td>
                                 <td style='margin-left:25px;'>" . $name . "</td>
-                                <td>" . $row['email'] . "</td>
+                                <td>" . $row['item'] . "</td>
                                 <td>
                                     <a href='delete.php?id=" . $row['id'] . "'' class='btn-floating red'>
                                         <i class='material-icons'>delete</i>
@@ -79,7 +82,7 @@ $name = $_SESSION['name'];
                     <form method="post" action="todolist_connect.php" class="col s12">
                         <div class="row" style="display:flex; align-items:center;">
                             <div class="input-field col s12">
-                                <textarea id="textarea1" name="item-description" class="materialize-textarea"></textarea>
+                                <textarea id="textarea1" name="item-description" class="materialize-textarea" required></textarea>
                                 <label for="textarea1">Descrição</label>
                             </div>
                             <button class="btn waves-effect waves-light col s6" type="submit" name="action-todolist">Adicionar</button>
