@@ -3,7 +3,6 @@
 require_once 'Db_connect.php';
 session_start();
 
-
 if ((!isset($_SESSION['name']) == true) and (!isset($_SESSION['email']) == true) and (!isset($_SESSION['password']) == true)) {
     unset($_SESSION['name']);
     unset($_SESSION['email']);
@@ -12,10 +11,6 @@ if ((!isset($_SESSION['name']) == true) and (!isset($_SESSION['email']) == true)
 }
 
 $name = $_SESSION['name'];
-
-
-
-
 ?>
 
 <!DOCTYPE html>
