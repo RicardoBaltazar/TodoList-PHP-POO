@@ -1,29 +1,18 @@
 <?php
 
-require_once 'Db_connect.php';
+require_once './class/Class_db_connect.php';
 
 $firstName = $_POST['first_name'];
 $lastName = $_POST['last_name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
-$name = $firstName.' '.$lastName;
+$name = ucfirst($firstName).' '.ucfirst($lastName);
 
-$name = ucfirst($name);
+//$name = ucfirst($name);
 $email = strtolower($email);
 
-
-try {
-    $stmt = $pdo->prepare("INSERT INTO user(name, email, password) VALUES(:name, :email, :password)");
-    $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":email", $email);
-    $stmt->bindParam(":password", $password);
-    $stmt->execute();
-    header('location:login.php');
-} catch (PDOException $error) {
-    echo 'Erro com banco de dados '.$error ->getMessage();
-} catch(Exception $error) {
-    echo 'Erro generico '.$error ->getMessage();
-}
+$sign = new UserConnect();
+$signup = $sign->insert($name, $email, $password);
 
 
 

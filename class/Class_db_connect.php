@@ -19,11 +19,18 @@ Class UserConnect {
     }
 
     public function insert($name, $email, $password){
+        try{
         $insert = $this->pdo->prepare('INSERT INTO user(name, email, password) VALUES(:name, :email, :password)');
         $insert->bindParam(":name", $name);
         $insert->bindParam(":email", $email);
         $insert->bindParam(":password", $password);
         $insert->execute();
+        header('location:login.php');
+        } catch (PDOException $error) {
+            echo 'Erro com banco de dados '.$error ->getMessage();
+        } catch(Exception $error) {
+            echo 'Erro generico '.$error ->getMessage();
+        }
     }
 
     public function insertList($user, $item){
