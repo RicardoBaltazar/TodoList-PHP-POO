@@ -1,8 +1,8 @@
 <?php
 
-require_once 'Db_connect.php';
-session_start();
+require_once './class/Class_db_connect.php';
 
+session_start();
 if ((!isset($_SESSION['name']) == true) and (!isset($_SESSION['email']) == true) and (!isset($_SESSION['password']) == true)) {
     unset($_SESSION['name']);
     unset($_SESSION['email']);
@@ -54,25 +54,21 @@ $name = $_SESSION['name'];
                             </tr>
 
                             <?php
-                            //$select = $pdo->query("SELECT * FROM list");
-                            $select = $pdo->prepare("SELECT * FROM list WHERE list.user = :user");
-                            //$stmt->bindParam(":name", $name);
-                            $select->bindParam(':user', $name);
-                            $select->execute();
-                            while ($row = $select->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<tr><td>" . $row['id'] . "</td>
-                                <td style='margin-left:25px;'>" . $name . "</td>
-                                <td>" . $row['item'] . "</td>
+                            $list = new UserConnect();
+                            $items =  $list->selectList($name);
+
+                            foreach($items as $value){
+                                echo "<tr><td>" . $value['id'] . "</td>
+                                <td style='margin-left:25px;'>" . $name  . "</td>
+                                <td>" . $value['item'] . "</td>
                                 <td>
-                                    <a href='delete.php?id=" . $row['id'] . "'' class='btn-floating red'>
-                                        <i class='material-icons'>delete</i>
-                                    </a>
+                                <a href='delete.php?id=" . $value['id'] . "'' class='btn-floating red'>
+                                <i class='material-icons'>delete</i>
+                                </a>
                                 </td>
                                 </tr>";
                             }
                             ?>
-
-
                     </table>
                     <form method="post" action="todolist_connect.php" class="col s12">
                         <div class="row" style="display:flex; align-items:center;">
@@ -84,12 +80,9 @@ $name = $_SESSION['name'];
                         </div>
                     </form>
                 </div>
-
             </section>
         </main>
     </div>
 
-
 </body>
-
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Class_db_connect.php';
+require_once './class/Class_db_connect.php';
 session_start();
 
 
@@ -14,8 +14,8 @@ $confirmLogin =  $confirm->login($name, $email, $password);
 if(count($confirmLogin) == 1){
     
     $_SESSION['name'] = $name;
-    //$_SESSION['email'] = $info['email'];
-    //$_SESSION['password'] = $info['password'];
+    $_SESSION['email'] = $email;
+    $_SESSION['password'] = $password;
     header('location:index.php');
     /*
     $_SESSION['email'] = $email;

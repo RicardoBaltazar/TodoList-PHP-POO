@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Db_connect.php';
+require_once './class/Class_db_connect.php';
 session_start();
 
 if(isset($_POST['action'])){
@@ -13,56 +13,22 @@ if(isset($_POST['action'])){
 
     //$name = strtolower($name);
     //$name = 'ricardo';
+    
     $name = ucfirst($name);
     $email = strtolower($email);
 
-
-    $stmt = $pdo->prepare("SELECT * FROM user WHERE name = :name AND email = :email AND password = :password");
-    //$stmt->bindParam(":name", $name);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $password);
-    $stmt->execute();
-    //$stmt->execute(['password' => $password]);
-    if($stmt->rowCount() == 1){
-        $info = $stmt->fetch(); 
-        echo $info['name']."<br>";
-        echo $info['email']."<br>";
-        echo $info['password'];
-
-        $_SESSION['name'] = $info['name'];
-        $_SESSION['email'] = $info['email'];
-        $_SESSION['password'] = $info['password'];
-        header('location:todolist.php');
-        /*
-        $_SESSION['email'] = $email;
-        $_SESSION['password'] = $password;
-        */
-    }else{
-        echo '<div class="box_erro_login"><p><i class="fas fa-exclamation-circle"></i> Usuário não encontrado.</p></div>';
-    }
-}
-
+    $confirm = new UserConnect();
+    $confirmLogin =  $confirm->login($name, $email, $password);
     
-
-
-    //if($sql->rowCount() == 1){}
-
-    /*
-    $sql = "select * from client where name = '$name' and email = '$email' and password = '$password'";
-    $result = mysqli_query($connect, $sql);
-
-    if(mysqli_num_rows($result) > 0){
+    if(count($confirmLogin) == 1){
+        
         $_SESSION['name'] = $name;
         $_SESSION['email'] = $email;
         $_SESSION['password'] = $password;
         header('location:todolist.php');
-    } else {
-        unset($_SESSION['name']);
-        unset($_SESSION['email']);
-        unset($_SESSION['password']);
-        header('location:index.php');
+    }else{
+        echo '<div class="box_erro_login"><p><i class="fas fa-exclamation-circle"></i> Usuário não encontrado.</p></div>';
     }
-    */
+}
 
 ?>

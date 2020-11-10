@@ -1,20 +1,12 @@
 <?php
 
-require_once 'Db_connect.php';
+require_once './class/Class_db_connect.php';
 
 $id = $_GET['id'];
 
-try{
-    $stmt = $pdo->prepare('DELETE FROM list WHERE id = :id');
-    $stmt->bindParam(":id", $id);
-    $stmt->execute();
-    header('location:todolist.php');
+$delete = new UserConnect();
+$itemDelete = $delete->deleteItem($id);
 
-} catch (PDOException $error) {
-    echo 'Erro com banco de dados '.$error ->getMessage();
-} catch(Exception $error) {
-    echo 'Erro generico '.$error ->getMessage();
-}
-
+header('location:todolist.php')
 
 ?>
