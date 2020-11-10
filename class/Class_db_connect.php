@@ -4,7 +4,6 @@ Class UserConnect {
 
     private $pdo;
 
-    //conexão com o banco de dados
     public function __construct()
     {
         try {
@@ -42,7 +41,6 @@ Class UserConnect {
 
     public function login($name, $email, $password){
         $login = $this->pdo->prepare("SELECT * FROM user WHERE name = :name AND email = :email AND password = :password");
-        //$stmt->bindParam(":name", $name);
         $login->bindParam(':name', $name);
         $login->bindParam(':email', $email);
         $login->bindParam(':password', $password);
@@ -53,9 +51,7 @@ Class UserConnect {
 
     public function select(){
         $result = array();
-        //$select = $this->pdo->prepare('SELECT * FROM user WHERE name = :name');
         $select = $this->pdo->prepare('SELECT * FROM user');
-        //$select->bindParam(':name', $name);
         $select->execute();
         $result = $select->fetchAll(PDO::FETCH_ASSOC);
         return $result;
@@ -63,7 +59,6 @@ Class UserConnect {
 
     public function selectList($name){
         $result = array();
-        //$select = $this->pdo->prepare('SELECT * FROM user WHERE name = :name');
         $select = $this->pdo->prepare("SELECT * FROM list WHERE list.user = :user");
         $select->bindParam(':user', $name);
         //$select->bindParam(':name', $name);
@@ -100,22 +95,5 @@ Class UserConnect {
         }
     }
 }
-
-
-/*
-//classe responsável por estabelecer a conexõ com o bd
-class Connect {
-
-    private static $instance;
-
-    //metodo para verificar se já existe instancia para chamar apenas uma vez.
-    public static function getConnect(){
-        if(!isset(self::$instance)){
-            self::$instance = new \PDO('mysql:host=localhost;dbname=todolist_poo;charset=utf8', 'root', '');
-        }
-        return self::$instance;
-    }
-}
-*/
 
 ?>
